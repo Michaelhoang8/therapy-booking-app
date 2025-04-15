@@ -36,6 +36,7 @@ app.get('/', (req, res) => {
 
 // API Routes would go here
 // Example: app.use('/api/users', require('./routes/users'));
+app.use('/api/auth', require('./routes/auth'));
 
 app.use('/api/users', require('./routes/users'));
 
