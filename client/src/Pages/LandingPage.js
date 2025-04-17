@@ -21,14 +21,18 @@ function LandingPage() {
         password
       });
 
-      if (response.data.exists) {
+      if (response.data.success) {
+        // Save the token to localStorage
+        localStorage.setItem('token', response.data.token);
+      
         navigate('/my-account');
       } else {
         setError("Invalid username or password");
       }
+      
     } catch (err) {
       console.error("Login error:", err);
-      setError("Failed to connect to server");
+      setError("Invalid username or password");
     }
   };
 

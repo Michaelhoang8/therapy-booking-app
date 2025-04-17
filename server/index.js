@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = process.env.JWT_SECRET;
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -36,9 +38,25 @@ app.get('/', (req, res) => {
 
 // API Routes would go here
 // Example: app.use('/api/users', require('./routes/users'));
+app.use('/api/appointments', require('./routes/appointments'));
+
 app.use('/api/auth', require('./routes/auth'));
 
 app.use('/api/users', require('./routes/users'));
+
+app.use('/api/therapists', require('./routes/therapists'));
+
+app.use('/api/availability', require('./routes/availability'));
+
+app.use('/api/bookings', require('./routes/bookings'));
+
+app.use('/api/session-types', require('./routes/sessionTypes'));
+
+app.use('/api/appointmentcancel', require('./routes/appointmentcancel'));
+
+app.use('/api/reschedule', require('./routes/reschedule'));
+
+app.use('/api/appointmentsall', require('./routes/appointmentsall'));
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

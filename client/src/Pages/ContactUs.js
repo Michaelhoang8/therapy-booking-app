@@ -29,7 +29,7 @@ function ContactUs() {
         <div className="contact-us-details">
           <div className="contact-item">
             <span className="contact-icon">📧</span>
-            <p className="contact-info">clinicsrus@gmail.com</p>
+            <p className="contact-info">VitalCare@gmail.com</p>
           </div>
           <div className="contact-item">
             <span className="contact-icon">📞</span>
