@@ -4,7 +4,7 @@ import '../Styles/BookAppointment.css';
 import logo from '../VitalCare.png';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import ConfirmBookingModal from './ConfirmBookingModal'; // if not already
+import ConfirmBookingModal from './ConfirmBookingModal';
 
 function BookAppointment() {
   const navigate = useNavigate();
@@ -22,15 +22,14 @@ function BookAppointment() {
     if (!token) return navigate('/');
     const decoded = jwtDecode(token);
     setPatientId(decoded.id);
-  
+
     axios.get('http://localhost:5000/api/therapists')
       .then(res => setTherapists(res.data));
-  
+
     axios.get('http://localhost:5000/api/session-types')
       .then(res => setSessionTypes(res.data))
       .catch(err => console.error('Error fetching session types:', err));
   }, [navigate]);
-  
 
   const handleTherapistChange = async (e) => {
     const therapistId = e.target.value;
@@ -49,6 +48,7 @@ function BookAppointment() {
         availabilityId: selectedSlot.availability_id,
         sessionTypeId: selectedTypeId
       });
+
       alert('Appointment booked!');
       setShowConfirmModal(false);
       setSelectedSlot(null);
@@ -60,6 +60,8 @@ function BookAppointment() {
     }
   };
 
+  const selectedTherapistName = therapists.find(t => t.therapist_id == selectedTherapist)?.name || 'Selected Doctor';
+
   return (
     <div className="book-container">
       <header className="book-header">
@@ -69,12 +71,23 @@ function BookAppointment() {
 
       <h2 className="booking-title">Appointment booking</h2>
 
-      <select className="dropdown" onChange={handleTherapistChange} defaultValue="">
+      <select className="dropdown" onChange={handleTherapistChange} value={selectedTherapist || ''}>
         <option value="" disabled>Select a Therapist</option>
         {therapists.map((t) => (
           <option key={t.therapist_id} value={t.therapist_id}>{t.name}</option>
         ))}
       </select>
+
+      {selectedTherapist && (
+        <button
+          className="view-reviews-btn"
+          onClick={() => navigate('/view-reviews', { state: { therapistId: selectedTherapist } })}
+        >
+          View Reviews for {selectedTherapistName}
+        </button>
+      )}
+
+      {selectedTherapist && <p className="times-label">Available times:</p>}
 
       <div className="timeslot-list">
         {availability.map(slot => {
@@ -123,7 +136,7 @@ function BookAppointment() {
       {showConfirmModal && (
         <ConfirmBookingModal
           slot={selectedSlot}
-          doctorName={therapists.find(t => t.therapist_id == selectedTherapist)?.name}
+          doctorName={selectedTherapistName}
           onCancel={() => setShowConfirmModal(false)}
           onConfirm={handleConfirm}
         />

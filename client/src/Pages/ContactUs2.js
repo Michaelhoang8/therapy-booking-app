@@ -29,20 +29,20 @@ function ContactUs() {
         <div className="contact-us-details">
           <div className="contact-item">
             <span className="contact-icon">📧</span>
-            <p className="contact-info">clinicsrus@gmail.com</p>
+            <p className="contact-info">vitalcare@gmail.com</p>
           </div>
           <div className="contact-item">
             <span className="contact-icon">📞</span>
-            <p className="contact-info">(403) - 555 - 5555</p>
+            <p className="contact-info">(403) - 888 - 8888</p>
           </div>
           <div className="contact-item">
             <span className="contact-icon">📍</span>
             <p className="contact-info">
-              123 Dalhousie St NW #912
+              420 Airdrie St NW #360
               <br />
               Calgary, Alberta
               <br />
-              Canada T3P 0B0
+              Canada T8H 9P9
             </p>
           </div>
         </div>

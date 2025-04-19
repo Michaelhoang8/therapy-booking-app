@@ -57,7 +57,7 @@
   }
   
   .my-account-logo {
-    width: 120px; /* Logo width as specified */
+    width: 240px; /* Logo width as specified */
     height: auto;
   }
   
@@ -73,6 +73,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 30px;
   }
   
   .logout-button:hover {
@@ -156,3 +157,18 @@
   .my-account-button:hover {
     background-color: #0055aa;
   }
+
+  .notifications-btn {
+    position: relative;
+  }
+  
+  .notification-dot {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    height: 10px;
+    width: 10px;
+    background-color: red;
+    border-radius: 50%;
+  }
+  

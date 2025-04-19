@@ -1,0 +1,93 @@
+/* Container for the entire page */
+.book-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Header with logo and navigation */
+  .book-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+  }
+  
+  .main-button {
+    background-color: #183e9f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .main-button:hover {
+    background-color: #1a4a9e;
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  /* Page Title */
+  .booking-title {
+    color: #183e9f;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Review List Section */
+  .review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  /* Individual Review Card */
+  .review-card {
+    border: 1px solid #183e9f;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #f9fbff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Star Rating Display */
+  .stars {
+    font-size: 22px;
+    color: gold;
+    margin-bottom: 10px;
+  }
+  
+  /* Optional Comment */
+  .comment-box {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    resize: vertical;
+    margin-top: 10px;
+  }
+  
+  
+  /* Date */
+  .review-date {
+    font-size: 14px;
+    color: #777;
+    text-align: right;
+  }
+  
+  .review-author {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: -32px;
+  }
+  

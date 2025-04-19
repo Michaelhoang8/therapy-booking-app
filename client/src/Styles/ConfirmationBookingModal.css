@@ -76,13 +76,13 @@
   }
   
   .time {
-    font-size: 16px;
+    font-size: 24px!important;
     font-weight: bold;
     color: #333;
   }
   
   .doctor {
-    font-size: 14px;
+    font-size: 24px!important;
     color: #53565f;
   }
   

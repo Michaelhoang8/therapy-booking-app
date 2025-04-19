@@ -15,21 +15,30 @@ function LandingPage() {
     setError(""); // Clear previous errors
     
     try {
-      // Send credentials to backend
       const response = await axios.post('http://localhost:5000/api/auth/login', {
         username,
         password
       });
 
       if (response.data.success) {
-        // Save the token to localStorage
-        localStorage.setItem('token', response.data.token);
-      
-        navigate('/my-account');
+        const { token, user } = response.data;
+
+        // Save token
+        localStorage.setItem('token', token);
+
+        // Redirect based on role
+        if (user.role === 'Admin') {
+          navigate('/my-admin-account');
+        } else if (user.role === 'Therapist') {
+          navigate('/my-therapist-account');
+        } else {
+          navigate('/my-account'); // Patient
+        }
+
       } else {
         setError("Invalid username or password");
       }
-      
+
     } catch (err) {
       console.error("Login error:", err);
       setError("Invalid username or password");

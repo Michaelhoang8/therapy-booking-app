@@ -53,31 +53,33 @@ function RescheduleAppointment() {
 
       {/* Current Appointment Summary */}
       <div className="current-appointment-card">
-        <p><strong>Current:</strong></p>
+        <p><strong>Current Date:</strong></p>
         <p>
           {new Date(currentAppt.date).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })} at {new Date(currentAppt.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </p>
         <p><strong>Doctor:</strong> {currentAppt.doctor}</p>
-        <p><strong>Concern:</strong> {currentAppt.concern}</p>
+        <p><strong>Type of Appointment:</strong> {currentAppt.concern}</p>
       </div>
 
       {/* Slot Selector */}
-      <div className="timeslot-list">
-        {availability.map(slot => {
-          const formatted = `${new Date(slot.date).toLocaleDateString()} - ${slot.start_time}`;
-          const isSelected = selectedSlot?.availability_id === slot.availability_id;
+{availability.length > 0 && <p className="times-label">Available times:</p>}
+<div className="timeslot-list">
+  {availability.map(slot => {
+    const formatted = `${new Date(slot.date).toLocaleDateString()} - ${slot.start_time}`;
+    const isSelected = selectedSlot?.availability_id === slot.availability_id;
 
-          return (
-            <button
-              key={slot.availability_id}
-              className={`slot-button ${isSelected ? 'selected-slot' : ''}`}
-              onClick={() => setSelectedSlot(slot)}
-            >
-              {formatted}
-            </button>
-          );
-        })}
-      </div>
+    return (
+      <button
+        key={slot.availability_id}
+        className={`slot-button ${isSelected ? 'selected-slot' : ''}`}
+        onClick={() => setSelectedSlot(slot)}
+      >
+        {formatted}
+      </button>
+    );
+  })}
+</div>
+
 
       {selectedSlot && (
         <button className="confirm-btn" onClick={() => setShowModal(true)}>

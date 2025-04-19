@@ -37,11 +37,16 @@
   }
   
   .dropdown {
-    width: 100%;
+    width: 80%!important;
+    max-width: 100%!important;
+    box-sizing: border-box;
     padding: 10px;
-    margin-bottom: 20px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
     font-size: 16px;
   }
+  
   
   .timeslot-list {
     display: flex;
@@ -110,4 +115,29 @@
     background-color: #f4f7fc;
     font-size: 16px;
   }
+
+  .view-reviews-btn {
+    margin-top: -10px;
+    margin-bottom: 20px;
+    background-color: #183e9f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .view-reviews-btn:hover {
+    background-color: #1a4a9e;
+  }
+  
+  .times-label {
+    font-weight: 600;
+    color: #183e9f;
+    font-size: 18px;
+    margin: 20px 0 10px;
+    text-align: center;
+  }
+  
   

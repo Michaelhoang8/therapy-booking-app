@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import '../Styles/MyAccount.css';
 import vitalcarelogo from "../VitalCare.png";
+import axios from 'axios';
 
 function MyAccount() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
+  const [hasNewNotifications, setHasNewNotifications] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -14,6 +16,16 @@ function MyAccount() {
       try {
         const decoded = jwtDecode(token); 
         setUsername(decoded.username);
+
+        // Check for new notifications
+        axios.get(`http://localhost:5000/api/notifications/new?userId=${decoded.id}`)
+          .then(res => {
+            if (res.data.hasNew) {
+              setHasNewNotifications(true);
+            }
+          })
+          .catch(err => console.error("Notification check failed", err));
+
       } catch (error) {
         console.error("Invalid token", error);
         navigate('/');
@@ -22,7 +34,6 @@ function MyAccount() {
       navigate('/');
     }
   }, [navigate]);
-
 
   return (
     <div className="my-account-container">
@@ -55,6 +66,10 @@ function MyAccount() {
         <button className="nav-button" onClick={() => navigate('/contact-us2')}>
           Contact Us
         </button>
+        <button className="nav-button notifications-btn" onClick={() => navigate('/notifications')}>
+          Notifications
+          {hasNewNotifications && <span className="notification-dot"></span>}
+        </button>
       </nav>
 
       <main className="my-account-main">
@@ -72,6 +87,12 @@ function MyAccount() {
             onClick={() => navigate('/manage-appointment')}
           >
             Manage Appointments
+          </button>
+          <button
+            className="my-account-button"
+            onClick={() => navigate('/manage-reviews')}
+          >
+            Manage Reviews
           </button>
         </div>
       </main>

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const db = require('../db'); // your db pool setup
+const db = require('../db');
 const SECRET_KEY = process.env.JWT_SECRET || 'default_secret_key';
 
 router.post('/login', async (req, res) => {
@@ -18,9 +18,9 @@ router.post('/login', async (req, res) => {
     if (result.rows.length > 0) {
       const user = result.rows[0];
 
-      // Create a JWT token
+      // Create a JWT token that includes role
       const token = jwt.sign(
-        { id: user.user_id, username: user.name },
+        { id: user.user_id, username: user.name, role: user.role },
         SECRET_KEY,
         { expiresIn: '2h' }
       );
@@ -29,7 +29,11 @@ router.post('/login', async (req, res) => {
         success: true,
         message: 'Login successful',
         token: token,
-        user: { id: user.user_id, username: user.name }
+        user: {
+          id: user.user_id,
+          username: user.name,
+          role: user.role
+        }
       });
     } else {
       res.status(401).json({ success: false, message: 'Invalid credentials' });

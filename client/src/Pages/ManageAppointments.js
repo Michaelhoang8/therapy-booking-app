@@ -3,13 +3,14 @@ import axios from 'axios';
 import '../Styles/ManageAppointments.css';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import ConfirmCancellationModal from './ConfirmCancellationModal'; // 👈 Import your modal
+import ConfirmCancellationModal from './ConfirmCancellationModal';
+import logo from '../VitalCare.png';
 
 function ManageAppointments() {
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
   const [patientName, setPatientName] = useState('');
-  const [selectedAppt, setSelectedAppt] = useState(null); // 👈 Tracks appt being cancelled
+  const [selectedAppt, setSelectedAppt] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -28,7 +29,6 @@ function ManageAppointments() {
       });
   }, [navigate]);
 
-  // 👇 Handle cancel confirmation
   const handleCancelAppointment = async (appointmentId) => {
     try {
       await axios.patch(`http://localhost:5000/api/appointmentcancel/${appointmentId}/cancel`);
@@ -40,15 +40,17 @@ function ManageAppointments() {
       alert("Failed to cancel appointment.");
     }
   };
-  
 
   return (
     <div className="manage-container">
       <header className="manage-header">
-        <h2>Manage Appointments</h2>
+        <button className="main-button" onClick={() => navigate('/my-account')}>Main</button>
+        <img src={logo} alt="VitalCare Logo" className="logo" />
       </header>
 
+      <h2 className="manage-title">Manage Appointments</h2>
       <p className="patient-name">{patientName}’s</p>
+
       <div className="appointment-table">
         <div className="table-header">
           <div>Date</div>
@@ -57,6 +59,7 @@ function ManageAppointments() {
           <div>Concern</div>
           <div>Actions</div>
         </div>
+
         {appointments.map((appt) => {
           const date = new Date(appt.date);
           return (
@@ -66,28 +69,27 @@ function ManageAppointments() {
               <div>{appt.doctor}</div>
               <div>{appt.concern}</div>
               <div>
-              <button
-  className="reschedule-btn"
-  onClick={() => navigate('/reschedule-appointment', { state: { appointment: appt } })}
->
-  Reschedule
-</button>
+                <button
+                  className="reschedule-btn"
+                  onClick={() => navigate('/reschedule-appointment', { state: { appointment: appt } })}
+                >
+                  Reschedule
+                </button>
 
-                <button className="cancel-btn" onClick={() => setSelectedAppt(appt)}>Cancel</button>
+                <button className="filler-btn" disabled>_______</button>
+
+                <button
+                  className="cancel-btn"
+                  onClick={() => setSelectedAppt(appt)}
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           );
         })}
       </div>
 
-      <button className="logout-btn" onClick={() => {
-        localStorage.removeItem('token');
-        navigate('/');
-      }}>
-        Log Out
-      </button>
-
-      {/* 👇 Cancel Confirmation Modal */}
       {selectedAppt && (
         <ConfirmCancellationModal
           appointment={selectedAppt}

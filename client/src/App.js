@@ -9,6 +9,9 @@ import ContactUs2 from './Pages/ContactUs2';
 import ManageAppointments from './Pages/ManageAppointments';
 import BookAppointment from './Pages/BookAppointment';
 import RescheduleAppointment from './Pages/RescheduleAppointment';
+import ManageReviews from './Pages/ManageReviews';
+import ViewReviews from './Pages/ViewReviews';
+import Notifications from './Pages/Notifications';
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
         <Route path="/manage-appointment" element={<ManageAppointments />} />
         <Route path="/book-appointment" element={<BookAppointment />} /> {/* Route to BookAppointment */}
         <Route path="/reschedule-appointment" element={<RescheduleAppointment />} /> {/* Route to RescheduleAppointment */}
+        <Route path="/manage-reviews" element={<ManageReviews />} />
+        <Route path="/view-reviews" element={<ViewReviews />} />
+        <Route path="/notifications" element={<Notifications />} />
       </Routes>
     </Router>
   );

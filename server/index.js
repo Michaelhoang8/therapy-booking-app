@@ -56,7 +56,10 @@ app.use('/api/appointmentcancel', require('./routes/appointmentcancel'));
 
 app.use('/api/reschedule', require('./routes/reschedule'));
 
-app.use('/api/appointmentsall', require('./routes/appointmentsall'));
+app.use('/api/reviews', require('./routes/reviews'));
+
+app.use('/api/completeddoctors', require('./routes/completeddoctors'));
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

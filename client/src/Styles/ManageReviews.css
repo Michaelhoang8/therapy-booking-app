@@ -1,0 +1,115 @@
+/* Page Container */
+.book-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  /* Header */
+  .book-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+  }
+  
+  .main-button {
+    background-color: #183e9f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .main-button:hover {
+    background-color: #1d47aa;
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  /* Page Title */
+  .booking-title {
+    color: #183e9f;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+  
+  /* Dropdown */
+  .dropdown {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  /* Review Section */
+  .review-section {
+    background-color: #f9fbff;
+    padding: 20px;
+    border: 1px solid #183e9f;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Star Selector */
+  .star-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .star-selector p {
+    margin: 0;
+    font-weight: bold;
+    color: #183e9f;
+  }
+  
+  .star {
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s ease;
+  }
+  
+  .selected-star {
+    color: gold;
+  }
+  
+  /* Comment Box */
+  .comment-box {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    resize: vertical;
+  }
+  
+  /* Confirm Button */
+  .confirm-btn {
+    background-color: #183e9f;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .confirm-btn:hover {
+    background-color: #1a4a9e;
+  }
+  
