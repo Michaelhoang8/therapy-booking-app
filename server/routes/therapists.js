@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// GET /api/therapists
 router.get('/', async (req, res) => {
     try {
       const result = await db.query(`
@@ -16,7 +15,6 @@ router.get('/', async (req, res) => {
     }
   });
 
-  // GET /api/therapists/:id
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
 

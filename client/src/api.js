@@ -5,9 +5,7 @@ const api = axios.create({
 });
 
 export const getUsers = () => api.get('/users');
-// Add more API calls as needed
 
 export default {
   getUsers,
-  // Export other API calls
 };

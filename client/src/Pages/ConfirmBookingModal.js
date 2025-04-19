@@ -12,7 +12,7 @@ const ConfirmBookingModal = ({ onCancel, onConfirm, slot, doctorName }) => {
     year: 'numeric'
   });
 
-  const formattedTime = slot.start_time.slice(0, 5); // assumes format like "08:00:00"
+  const formattedTime = slot.start_time.slice(0, 5);
 
   return (
     <div className="modal-overlay">

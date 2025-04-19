@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
-import '../Styles/ManageReviews.css'; // reuse styling
+import '../Styles/ManageReviews.css';
 import logo from '../VitalCare.png';
 
 function ManageReviews() {
@@ -19,13 +19,13 @@ function ManageReviews() {
     if (!token) return navigate('/');
   
     const decoded = jwtDecode(token);
-    console.log("🔍 Decoded token:", decoded); // <== LOG THIS
+    console.log("🔍 Decoded token:", decoded);
   
     setPatientId(decoded.id);
   
     axios.get(`http://localhost:5000/api/completeddoctors?patientId=${decoded.id}`)
       .then(res => {
-        console.log("🩺 Doctors received:", res.data); // <== LOG THIS
+        console.log("🩺 Doctors received:", res.data);
         setDoctors(res.data);
       })
       .catch(err => {

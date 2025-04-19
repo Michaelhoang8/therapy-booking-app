@@ -18,7 +18,6 @@ router.post('/login', async (req, res) => {
     if (result.rows.length > 0) {
       const user = result.rows[0];
 
-      // Create a JWT token that includes role
       const token = jwt.sign(
         { id: user.user_id, username: user.name, role: user.role },
         SECRET_KEY,

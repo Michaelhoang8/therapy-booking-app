@@ -1,4 +1,4 @@
-/* General container styling */
+
 .contact-us-container {
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
     min-height: 100vh;
   }
   
-  /* Header section */
+ 
   .contact-us-header {
     text-align: center;
     margin-bottom: 20px;
@@ -28,7 +28,7 @@
     font-weight: bold;
   }
   
-  /* Navigation styling */
+
   .contact-us-nav {
     display: flex;
     justify-content: center;
@@ -56,7 +56,7 @@
     background-color: #e6f0ff;
   }
   
-  /* Main content styling */
+
   .contact-us-main {
     width: 100%;
     max-width: 400px;

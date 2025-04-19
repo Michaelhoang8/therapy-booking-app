@@ -17,7 +17,6 @@ function MyAccount() {
         const decoded = jwtDecode(token); 
         setUsername(decoded.username);
 
-        // Check for new notifications
         axios.get(`http://localhost:5000/api/notifications/new?userId=${decoded.id}`)
           .then(res => {
             if (res.data.hasNew) {

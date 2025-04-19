@@ -1,4 +1,4 @@
-/* Container for the entire page */
+
 .book-container {
     font-family: Arial, sans-serif;
     padding: 20px;
@@ -6,7 +6,6 @@
     margin: 0 auto;
   }
   
-  /* Header with logo and navigation */
   .book-header {
     display: flex;
     justify-content: space-between;
@@ -32,7 +31,6 @@
     height: 50px;
   }
   
-  /* Page Title */
   .booking-title {
     color: #183e9f;
     font-size: 24px;
@@ -41,14 +39,12 @@
     text-align: center;
   }
   
-  /* Review List Section */
   .review-list {
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
   
-  /* Individual Review Card */
   .review-card {
     border: 1px solid #183e9f;
     border-radius: 8px;
@@ -57,14 +53,12 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   }
   
-  /* Star Rating Display */
   .stars {
     font-size: 22px;
     color: gold;
     margin-bottom: 10px;
   }
   
-  /* Optional Comment */
   .comment-box {
     width: 100%;
     max-width: 100%;
@@ -78,7 +72,6 @@
   }
   
   
-  /* Date */
   .review-date {
     font-size: 14px;
     color: #777;

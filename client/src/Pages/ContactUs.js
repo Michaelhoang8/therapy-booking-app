@@ -1,10 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import '../Styles/ContactUs.css';
-import VitalCareLogo from '../VitalCare.png'; // Import the logo
+import VitalCareLogo from '../VitalCare.png';
 
 function ContactUs() {
-  const navigate = useNavigate(); // Initialize navigation
+  const navigate = useNavigate();
 
   return (
     <div className="contact-us-container">

@@ -1,19 +1,18 @@
-/* Modal Overlay */
+
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    backdrop-filter: blur(8px); /* Blur effect */
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
   }
   
-/* Modal Content */
 .modal-content {
   background-color: white;
   border-radius: 10px;
@@ -22,7 +21,7 @@
   width: 90%;
   max-width: 400px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative; /* Ensure the close button is positioned relative to the modal content */
+  position: relative;
 }
   
   .modal-header {
@@ -45,7 +44,6 @@
     text-align: center;
   }
   
-  /* Appointment Card */
   .appointment-card {
     display: flex;
     align-items: center;
@@ -93,11 +91,10 @@
     color: #53565f;
   }
   
-  /* Button Group */
 .modal-buttons {
   display: flex;
-  justify-content: center; /* Center the button group */
-  gap: 20px; /* Add spacing between buttons */
+  justify-content: center;
+  gap: 20px;
 }
 
 .modal-button {
@@ -106,7 +103,7 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  width: 100px; /* Ensure consistent button size */
+  width: 100px;
   text-align: center;
   font-weight: bold;
 }
@@ -128,7 +125,7 @@
 .confirm-button:hover {
   background-color: #1a4a9e;
 }
-  /* Close Button */
+
 .close-button {
   position: absolute;
   top: 10px;

@@ -3,10 +3,9 @@ const router = express.Router();
 const db = require('../db');
 
 router.get('/', async (req, res) => {
-  const { patientId } = req.query; // this is actually User_ID
+  const { patientId } = req.query;
 
   try {
-    // Convert User_ID to Patient_ID
     const patientRes = await db.query(
       'SELECT Patient_ID FROM Patients WHERE User_ID = $1',
       [patientId]
@@ -18,7 +17,6 @@ router.get('/', async (req, res) => {
 
     const actualPatientId = patientRes.rows[0].patient_id;
 
-    // Now fetch completed appointments
     const result = await db.query(`
       SELECT DISTINCT t.Therapist_ID, u.Name
       FROM Appointments a

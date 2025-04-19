@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// Get all users
 router.get('/', async (req, res) => {
   try {
     const result = await db.query('SELECT * FROM users');
@@ -13,6 +12,5 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Add more routes as needed
 
 module.exports = router;

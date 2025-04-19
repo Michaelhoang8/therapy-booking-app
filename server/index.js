@@ -9,11 +9,9 @@ const SECRET_KEY = process.env.JWT_SECRET;
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Database connection
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -22,7 +20,6 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-// Test database connection
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.error('Error connecting to the database', err);
@@ -31,13 +28,10 @@ pool.query('SELECT NOW()', (err, res) => {
   }
 });
 
-// Basic route
 app.get('/', (req, res) => {
   res.send('Therapy Booking API');
 });
 
-// API Routes would go here
-// Example: app.use('/api/users', require('./routes/users'));
 app.use('/api/appointments', require('./routes/appointments'));
 
 app.use('/api/auth', require('./routes/auth'));
@@ -59,6 +53,8 @@ app.use('/api/reschedule', require('./routes/reschedule'));
 app.use('/api/reviews', require('./routes/reviews'));
 
 app.use('/api/completeddoctors', require('./routes/completeddoctors'));
+
+app.use('/api/notifications', require('./routes/notifications'));
 
 
 app.listen(port, () => {

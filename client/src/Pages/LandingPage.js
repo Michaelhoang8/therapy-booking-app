@@ -12,7 +12,7 @@ function LandingPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
+    setError("");
     
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', {
@@ -23,16 +23,16 @@ function LandingPage() {
       if (response.data.success) {
         const { token, user } = response.data;
 
-        // Save token
+        
         localStorage.setItem('token', token);
 
-        // Redirect based on role
+        
         if (user.role === 'Admin') {
           navigate('/my-admin-account');
         } else if (user.role === 'Therapist') {
           navigate('/my-therapist-account');
         } else {
-          navigate('/my-account'); // Patient
+          navigate('/my-account');
         }
 
       } else {

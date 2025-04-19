@@ -6,33 +6,53 @@ router.post('/', async (req, res) => {
   const { patientId, therapistId, availabilityId, sessionTypeId } = req.body;
 
   try {
-    // Get date from availability row
-    const availabilityRes = await db.query(
-      `SELECT Date FROM Availability WHERE Availability_ID = $1`,
-      [availabilityId]
-    );
+    const [availabilityRes, sessionTypeRes, therapistRes] = await Promise.all([
+      db.query(`SELECT Date, Start_Time FROM Availability WHERE Availability_ID = $1`, [availabilityId]),
+      db.query(`SELECT Title FROM Session_Types WHERE Session_Type_ID = $1`, [sessionTypeId]),
+      db.query(`
+        SELECT u.Name AS Therapist_Name 
+        FROM Therapists t
+        JOIN Users u ON t.User_ID = u.User_ID
+        WHERE t.Therapist_ID = $1
+      `, [therapistId])
+    ]);
 
-    if (availabilityRes.rows.length === 0) {
-      return res.status(404).json({ message: 'Availability not found' });
+    if (
+      availabilityRes.rows.length === 0 ||
+      sessionTypeRes.rows.length === 0 ||
+      therapistRes.rows.length === 0
+    ) {
+      return res.status(404).json({ message: 'Required data not found' });
     }
 
-    const date = availabilityRes.rows[0].date;
+    const appointmentDate = new Date(availabilityRes.rows[0].date);
+    const startTime = availabilityRes.rows[0].start_time;
+    const sessionTitle = sessionTypeRes.rows[0].title;
+    const therapistName = therapistRes.rows[0].therapist_name;
 
-    // Insert appointment
     await db.query(
       `INSERT INTO Appointments (Patient_ID, Therapist_ID, Session_Type_ID, Status, Date)
        VALUES ($1, $2, $3, 'Scheduled', $4)`,
-      [patientId, therapistId, sessionTypeId, date]
+      [patientId, therapistId, sessionTypeId, appointmentDate]
     );
 
-    // Mark availability as Booked
     await db.query(
       `UPDATE Availability SET Status = 'Booked' WHERE Availability_ID = $1`,
       [availabilityId]
     );
 
-    // Add notification
-    const message = 'You have successfully booked an appointment on ' + new Date(date).toLocaleDateString();
+    const formattedTime = new Date(`${appointmentDate.toDateString()} ${startTime}`).toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    const formattedDate = appointmentDate.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+
+    const message = `You have successfully booked a ${sessionTitle} appointment at ${formattedTime} on ${formattedDate} with ${therapistName}.`;
+
     await db.query(
       `INSERT INTO Notifications (User_ID, Message) VALUES ($1, $2)`,
       [patientId, message]
@@ -44,6 +64,5 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-  
-  
+
 module.exports = router;

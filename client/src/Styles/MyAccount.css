@@ -1,4 +1,4 @@
-/* General container styling */
+
 .my-account-container {
     display: flex;
     flex-direction: column;
@@ -10,20 +10,17 @@
     min-height: 100vh;
   }
   
-    /* Header */
     .my-account-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       text-align: center;
       width: 100%;
-      /* margin-bottom: 5px; */
       margin-top: -30px;
       padding: 0 20px;
     }
   
     .header-left {
-      /* display: flex; */
       flex: 1;
       text-align: center;
       align-items: left;
@@ -42,7 +39,6 @@
   
     .header-right {
       flex: 1;
-      /* display: flex; */
       text-align: right;
       align-items: right;
       margin-top: 180px;
@@ -57,7 +53,7 @@
   }
   
   .my-account-logo {
-    width: 240px; /* Logo width as specified */
+    width: 240px;
     height: auto;
   }
   
@@ -80,7 +76,6 @@
     background-color: #0055aa;
   }
   
-  /* Navigation styling */
   .my-account-nav {
     display: flex;
     justify-content: center;
@@ -115,7 +110,6 @@
     font-size: 20px;
   }
   
-  /* Main content styling */
   .my-account-main {
     width: 100%;
     max-width: 400px;

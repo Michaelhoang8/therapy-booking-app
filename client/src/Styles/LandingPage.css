@@ -1,6 +1,4 @@
-/* src/Styles/landingpage.css */
 
-/* General container styling */
 .landing-page-container {
   display: flex;
   flex-direction: column;
@@ -12,7 +10,6 @@
   min-height: 100vh;
 }
 
-/* Header styling */
 .landing-header {
   text-align: center;
   margin-bottom: 20px;
@@ -30,7 +27,6 @@
   font-weight: bold;
 }
 
-/* Navigation styling */
 .landing-nav {
   display: flex;
   justify-content: center;
@@ -58,7 +54,6 @@
   background-color: #e6f0ff;
 }
 
-/* Login form styling */
 .landing-main {
   width: 100%;
   max-width: 400px;
@@ -121,6 +116,5 @@
 }
 
 .login-input {
-  /* Your existing styles */
   margin-bottom: 15px;
 }

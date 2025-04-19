@@ -8,7 +8,7 @@ import ConfirmBookingModal from './ConfirmBookingModal';
 function RescheduleAppointment() {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentAppt = location.state?.appointment; // passed from ManageAppointments
+  const currentAppt = location.state?.appointment;
 
   const [therapists, setTherapists] = useState([]);
   const [selectedTherapist, setSelectedTherapist] = useState(null);
@@ -19,7 +19,7 @@ function RescheduleAppointment() {
   useEffect(() => {
     if (!currentAppt) return navigate('/my-account');
 
-    setSelectedTherapist(currentAppt.therapist_id); // default to current doctor
+    setSelectedTherapist(currentAppt.therapist_id);
 
     axios.get('http://localhost:5000/api/therapists')
       .then(res => setTherapists(res.data));
@@ -51,7 +51,7 @@ function RescheduleAppointment() {
 
       <h2 className="booking-title">Reschedule Appointment</h2>
 
-      {/* Current Appointment Summary */}
+      {}
       <div className="current-appointment-card">
         <p><strong>Current Date:</strong></p>
         <p>
@@ -61,7 +61,7 @@ function RescheduleAppointment() {
         <p><strong>Type of Appointment:</strong> {currentAppt.concern}</p>
       </div>
 
-      {/* Slot Selector */}
+      {}
 {availability.length > 0 && <p className="times-label">Available times:</p>}
 <div className="timeslot-list">
   {availability.map(slot => {

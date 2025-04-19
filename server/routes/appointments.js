@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// GET upcoming appointments for a patient
 router.get('/', async (req, res) => {
   const { patientId } = req.query;
 

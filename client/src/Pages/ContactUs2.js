@@ -1,32 +1,50 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import '../Styles/ContactUs.css';
-import vitalcarelogo from '../VitalCare.png'; // Import the logo
+import { useNavigate } from 'react-router-dom';
+import '../Styles/MyAccount.css';
+import vitalcarelogo from '../VitalCare.png';
 
-function ContactUs() {
-  const navigate = useNavigate(); // Initialize navigation
+function ContactUs2() {
+  const navigate = useNavigate();
 
   return (
-    <div className="contact-us-container">
-      <header className="contact-us-header">
+    <div className="my-account-container">
+      <header className="my-account-header">
+        <div className="header-left">
+          <p className="booking-application-text">Booking Application</p>
+        </div>
+        <div className="header-center">
           <img
             src={vitalcarelogo}
             alt="VitalCare Logo"
-            className="contact-us-logo"
+            className="my-account-logo"
           />
-        <p className="contact-us-description">Booking Application</p>
+        </div>
+        <div className="header-right">
+          <button
+            className="logout-button"
+            onClick={() => {
+              localStorage.removeItem('token');
+              navigate('/');
+            }}
+          >
+            Log Out
+          </button>
+        </div>
       </header>
 
-      <nav className="contact-us-nav">
+      <nav className="my-account-nav">
         <button className="nav-button" onClick={() => navigate('/my-account')}>
           My Account
         </button>
         <button className="nav-button active">Contact Us</button>
+        <button className="nav-button" onClick={() => navigate('/notifications')}>
+          Notifications
+        </button>
       </nav>
 
-      <main className="contact-us-main">
-        <h2 className="contact-us-title">Contact Us</h2>
-        <div className="contact-us-details">
+      <main className="my-account-main">
+        <h2 className="welcome-text">Contact Us</h2>
+        <div className="button-container">
           <div className="contact-item">
             <span className="contact-icon">📧</span>
             <p className="contact-info">vitalcare@gmail.com</p>
@@ -38,10 +56,8 @@ function ContactUs() {
           <div className="contact-item">
             <span className="contact-icon">📍</span>
             <p className="contact-info">
-              420 Airdrie St NW #360
-              <br />
-              Calgary, Alberta
-              <br />
+              420 Airdrie St NW #360<br />
+              Calgary, Alberta<br />
               Canada T8H 9P9
             </p>
           </div>
@@ -51,4 +67,4 @@ function ContactUs() {
   );
 }
 
-export default ContactUs;
+export default ContactUs2;

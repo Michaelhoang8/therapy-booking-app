@@ -22,8 +22,8 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/contact-us2" element={<ContactUs2 />} />
         <Route path="/manage-appointment" element={<ManageAppointments />} />
-        <Route path="/book-appointment" element={<BookAppointment />} /> {/* Route to BookAppointment */}
-        <Route path="/reschedule-appointment" element={<RescheduleAppointment />} /> {/* Route to RescheduleAppointment */}
+        <Route path="/book-appointment" element={<BookAppointment />} />
+        <Route path="/reschedule-appointment" element={<RescheduleAppointment />} />
         <Route path="/manage-reviews" element={<ManageReviews />} />
         <Route path="/view-reviews" element={<ViewReviews />} />
         <Route path="/notifications" element={<Notifications />} />

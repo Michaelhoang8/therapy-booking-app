@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../Styles/ViewReviews.css'; // Reuse styling
+import '../Styles/ViewReviews.css';
 import logo from '../VitalCare.png';
 
 function ViewReviews() {
@@ -18,12 +18,10 @@ function ViewReviews() {
       return;
     }
 
-    // Fetch therapist name
     axios.get(`http://localhost:5000/api/therapists/${therapistId}`)
       .then(res => setTherapistName(res.data.name))
       .catch(() => setTherapistName('Therapist'));
 
-    // Fetch reviews
     axios.get(`http://localhost:5000/api/reviews/therapist/${therapistId}`)
       .then(res => setReviews(res.data))
       .catch(err => console.error('Failed to load reviews:', err));
