@@ -1,0 +1,10 @@
+{
+  "archive": "therapy-booking-app.zip",
+  "sha256": "caa1899a657e23d26e3512981f6c1ad9e122c684ef7114e7669e58237d796004",
+  "source_files_imported": 64,
+  "excluded": [
+    "node_modules",
+    "server/.env"
+  ],
+  "runtime_validation": "Not performed at owner request"
+}

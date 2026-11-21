@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../Styles/ManageAppointments.css';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-import ConfirmCancellationModal from './ConfirmCancellationModal';
 import logo from '../VitalCare.png';
+import ConfirmCancellationModal from './ConfirmCancellationModal';
 
 function ManageAppointments() {
   const navigate = useNavigate();
@@ -14,13 +13,18 @@ function ManageAppointments() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) return navigate('/');
-
-    const decoded = jwtDecode(token);
-    setPatientName(decoded.username);
+    const patientId = localStorage.getItem('patientId');
+    const username = localStorage.getItem('username') || '';
+    if (!token || !patientId) {
+      return navigate('/');
+    }
+    setPatientName(username);
 
     axios
-      .get(`http://localhost:5000/api/appointments/?patientId=${decoded.id}`)
+      .get('http://localhost:5000/api/appointments', {
+        params: { patientId },
+        headers: { Authorization: `Bearer ${token}` }
+      })
       .then((res) => {
         setAppointments(res.data);
       })
@@ -29,15 +33,19 @@ function ManageAppointments() {
       });
   }, [navigate]);
 
-  const handleCancelAppointment = async (appointmentId) => {
+  const handleCancelAppointment = async (appt) => {
     try {
-      await axios.patch(`http://localhost:5000/api/appointmentcancel/${appointmentId}/cancel`);
-      setAppointments(prev => prev.filter(appt => appt.appointment_id !== appointmentId));
+      await axios.patch(
+        `http://localhost:5000/api/appointmentcancel/${appt.appointment_id}/cancel`,
+        {},
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      setAppointments(prev => prev.filter(a => a.appointment_id !== appt.appointment_id));
       setSelectedAppt(null);
-      alert("Appointment cancelled.");
+      alert('Appointment cancelled.');
     } catch (err) {
-      console.error("Failed to cancel:", err);
-      alert("Failed to cancel appointment.");
+      console.error('Failed to cancel:', err);
+      alert('Failed to cancel appointment.');
     }
   };
 
@@ -49,7 +57,7 @@ function ManageAppointments() {
       </header>
 
       <h2 className="manage-title">Manage Appointments</h2>
-      <p className="patient-name">{patientName}’s</p>
+      <p className="patient-name">{patientName}’s Appointments</p>
 
       <div className="appointment-table">
         <div className="table-header">
@@ -60,12 +68,12 @@ function ManageAppointments() {
           <div>Actions</div>
         </div>
 
-        {appointments.map((appt) => {
-          const date = new Date(appt.date);
+        {appointments.map(appt => {
+          const dateObj = new Date(appt.date);
           return (
             <div className="table-row" key={appt.appointment_id}>
-              <div>{date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}</div>
-              <div>{date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+              <div>{dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}</div>
+              <div>{dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
               <div>{appt.doctor}</div>
               <div>{appt.concern}</div>
               <div>
@@ -75,12 +83,10 @@ function ManageAppointments() {
                 >
                   Reschedule
                 </button>
-
                 <button className="filler-btn" disabled>_______</button>
-
                 <button
                   className="cancel-btn"
-                  onClick={() => setSelectedAppt(appt)}
+                  onClick={() => handleCancelAppointment(appt)}
                 >
                   Cancel
                 </button>

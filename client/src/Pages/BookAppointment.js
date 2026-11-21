@@ -3,7 +3,6 @@ import axios from 'axios';
 import '../Styles/BookAppointment.css';
 import logo from '../VitalCare.png';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
 import ConfirmBookingModal from './ConfirmBookingModal';
 
 function BookAppointment() {
@@ -18,13 +17,18 @@ function BookAppointment() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return navigate('/');
-    const decoded = jwtDecode(token);
-    setPatientId(decoded.id);
+    // Retrieve Patients.patient_id stored during login
+    const pid = localStorage.getItem('patientId');
+    if (!pid) {
+      // no patientId found, go back to login
+      return navigate('/');
+    }
+    setPatientId(Number(pid));
 
+    // Load therapists and session types
     axios.get('http://localhost:5000/api/therapists')
-      .then(res => setTherapists(res.data));
+      .then(res => setTherapists(res.data))
+      .catch(err => console.error('Error fetching therapists:', err));
 
     axios.get('http://localhost:5000/api/session-types')
       .then(res => setSessionTypes(res.data))
@@ -36,52 +40,81 @@ function BookAppointment() {
     setSelectedTherapist(therapistId);
     setSelectedSlot(null);
     setSelectedTypeId('');
-    const res = await axios.get(`http://localhost:5000/api/availability/${therapistId}`);
-    setAvailability(res.data);
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/availability/${therapistId}`
+      );
+      setAvailability(res.data);
+    } catch (err) {
+      console.error('Error fetching availability:', err);
+    }
   };
 
   const handleConfirm = async () => {
     try {
-      await axios.post('http://localhost:5000/api/bookings', {
+      const res = await axios.post('http://localhost:5000/api/bookings', {
         patientId,
         therapistId: selectedTherapist,
         availabilityId: selectedSlot.availability_id,
         sessionTypeId: selectedTypeId
       });
 
-      alert('Appointment booked!');
-      setShowConfirmModal(false);
-      setSelectedSlot(null);
-      setSelectedTypeId('');
-      setAvailability(prev => prev.filter(a => a.availability_id !== selectedSlot.availability_id));
+      // success if 2xx
+      if (res.status >= 200 && res.status < 300) {
+        alert('Appointment booked successfully!');
+        setShowConfirmModal(false);
+        setSelectedSlot(null);
+        setSelectedTypeId('');
+        setAvailability(prev =>
+          prev.filter(a => a.availability_id !== selectedSlot.availability_id)
+        );
+      } else {
+        alert('Failed to book appointment.');
+      }
     } catch (err) {
       console.error('Booking failed:', err);
       alert('Failed to book appointment.');
     }
   };
 
-  const selectedTherapistName = therapists.find(t => t.therapist_id == selectedTherapist)?.name || 'Selected Doctor';
+  const selectedTherapistName =
+    therapists.find(t => t.therapist_id == selectedTherapist)?.name ||
+    'Selected Therapist';
 
   return (
     <div className="book-container">
       <header className="book-header">
-        <button className="main-button" onClick={() => navigate('/my-account')}>Main</button>
+        <button className="main-button" onClick={() => navigate('/my-account')}>
+          Main
+        </button>
         <img src={logo} alt="Logo" className="logo" />
       </header>
 
-      <h2 className="booking-title">Appointment booking</h2>
+      <h2 className="booking-title">Appointment Booking</h2>
 
-      <select className="dropdown" onChange={handleTherapistChange} value={selectedTherapist || ''}>
-        <option value="" disabled>Select a Therapist</option>
-        {therapists.map((t) => (
-          <option key={t.therapist_id} value={t.therapist_id}>{t.name}</option>
+      <select
+        className="dropdown"
+        onChange={handleTherapistChange}
+        value={selectedTherapist || ''}
+      >
+        <option value="" disabled>
+          Select a Therapist
+        </option>
+        {therapists.map(t => (
+          <option key={t.therapist_id} value={t.therapist_id}>
+            {t.name}
+          </option>
         ))}
       </select>
 
       {selectedTherapist && (
         <button
           className="view-reviews-btn"
-          onClick={() => navigate('/view-reviews', { state: { therapistId: selectedTherapist } })}
+          onClick={() =>
+            navigate('/view-reviews', {
+              state: { therapistId: selectedTherapist }
+            })
+          }
         >
           View Reviews for {selectedTherapistName}
         </button>
@@ -91,9 +124,10 @@ function BookAppointment() {
 
       <div className="timeslot-list">
         {availability.map(slot => {
-          const formatted = `${new Date(slot.date).toLocaleDateString()} - ${slot.start_time}`;
-          const isSelected = selectedSlot?.availability_id === slot.availability_id;
-
+          const formatted =
+            `${new Date(slot.date).toLocaleDateString()} - ${slot.start_time}`;
+          const isSelected =
+            selectedSlot?.availability_id === slot.availability_id;
           return (
             <button
               key={slot.availability_id}
@@ -115,9 +149,11 @@ function BookAppointment() {
           <select
             id="concern"
             value={selectedTypeId}
-            onChange={(e) => setSelectedTypeId(e.target.value)}
+            onChange={e => setSelectedTypeId(e.target.value)}
           >
-            <option value="" disabled>Select type</option>
+            <option value="" disabled>
+              Select type
+            </option>
             {sessionTypes.map(type => (
               <option key={type.session_type_id} value={type.session_type_id}>
                 {type.title}

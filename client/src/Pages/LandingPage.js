@@ -1,3 +1,4 @@
+// client/src/Pages/LandingPage.js
 import React, { useState } from "react";
 import axios from "axios";
 import '../Styles/LandingPage.css';
@@ -15,28 +16,35 @@ function LandingPage() {
     setError("");
     
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
-        username,
-        password
-      });
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/login',
+        { username, password }
+      );
 
-      if (response.data.success) {
-        const { token, user } = response.data;
-
-        
-        localStorage.setItem('token', token);
-
-        
-        if (user.role === 'Admin') {
-          navigate('/my-admin-account');
-        } else if (user.role === 'Therapist') {
-          navigate('/my-therapist-account');
-        } else {
-          navigate('/my-account');
-        }
-
-      } else {
+      const { success, token, role, user, patientId, therapistId } = response.data;
+      if (!success) {
         setError("Invalid username or password");
+        return;
+      }
+
+      // store everything we need
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
+      localStorage.setItem('userId', user.id);
+      localStorage.setItem('username', user.username);
+      if (patientId !== null)   localStorage.setItem('patientId', patientId);
+      if (therapistId !== null) localStorage.setItem('therapistId', therapistId);
+      
+      if (role === 'Therapist') {
+        // also store therapistId if you returned it:
+        if (response.data.therapistId) {
+          localStorage.setItem('therapistId', response.data.therapistId);
+        }
+        navigate('/therapist');
+      } else if (role === 'Admin') {
+        navigate('/admin');
+      } else {
+        navigate('/my-account');
       }
 
     } catch (err) {
@@ -68,13 +76,13 @@ function LandingPage() {
       </nav>
 
       <main className="landing-main">
-        <h2 className="login-title">Patient Login</h2>
+        <h2 className="login-title">Login</h2>
         {error && <p className="error-message">{error}</p>}
         <form className="login-form" onSubmit={handleLogin}>
           <input
             type="text"
             className="login-input"
-            placeholder="Username"
+            placeholder="Username or Email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required

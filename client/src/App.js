@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import TherapistDashboard from './Pages/TherapistDashboard';
+import AdminDashboard from './Pages/AdminDashboard';
 import LandingPage from './Pages/LandingPage';
 import ContactUs from './Pages/ContactUs';
 import MyAccount from './Pages/MyAccount';
@@ -17,6 +19,8 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/therapist" element={<TherapistDashboard />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/my-account" element={<MyAccount />} />
         <Route path="/contact-us" element={<ContactUs />} />
